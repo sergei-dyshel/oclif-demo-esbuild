@@ -3,7 +3,6 @@
   "version": "0.5.48",
   "description": "Bundled plugin for testing",
   "author": "Salesforce",
-  "bugs": "https://github.com/oclif/plugin-test-esbuild/issues",
   "keywords": [
     "oclif"
   ],
@@ -11,9 +10,7 @@
     "bundle": "./bin/run.js"
   },
   "dependencies": {
-    "@oclif/core": "^4",
-    "@oclif/plugin-test-esm-1": "^0.8.41",
-    "@oclif/plugin-plugins": "^5.4.17"
+    "@oclif/core": "^4"
   },
   "devDependencies": {
     "@oclif/prettier-config": "^0.2.1",
@@ -29,7 +26,6 @@
     "eslint-config-prettier": "^9.1.0",
     "mocha": "^10",
     "oclif": "^4.15.28",
-    "shx": "^0.3.4",
     "ts-node": "^10.9.2",
     "typescript": "^5"
   },
@@ -41,7 +37,6 @@
     "/dist",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/oclif/plugin-test-esbuild",
   "license": "MIT",
   "main": "dist/index.js",
   "oclif": {
@@ -63,28 +58,19 @@
         {
           "target": "./dist/index.js",
           "identifier": "INIT_HOOK"
-        },
-        {
-          "target": "./dist/index.js",
-          "identifier": "ESM1_INIT_HOOK"
         }
-      ],
-      "update": {
-        "target": "./dist/index.js",
-        "identifier": "UPDATE_HOOK"
-      }
+      ]
     }
   },
-  "repository": "oclif/plugin-test-esbuild",
   "scripts": {
-    "build": "shx rm -rf dist && node bin/bundle.js",
+    "watch": "tsc --watch --noEmit",
+    "build": "rm -rf dist && node bin/bundle.js",
     "lint": "eslint . --ext .ts",
-    "postpack": "shx rm -f oclif.manifest.json",
+    "postpack": "rm -f oclif.manifest.json",
     "posttest": "yarn lint",
     "prepack": "yarn build && oclif manifest && oclif readme",
     "prepare": "yarn build",
     "test": "mocha --forbid-only \"test/**/*.test.ts\"",
     "version": "oclif readme && git add README.md"
-  },
-  "type": "module"
+  }
 }

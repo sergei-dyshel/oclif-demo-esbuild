@@ -1,24 +1,53 @@
+/* eslint-disable unicorn/prefer-module */
+/* eslint-disable perfectionist/sort-objects */
 import {Command, execute} from '@oclif/core'
-import * as PluginPlugins from '@oclif/plugin-plugins'
-import * as PluginTestEsm1 from '@oclif/plugin-test-esm-1'
+import {LoadOptions} from '@oclif/core/interfaces'
 
 import ESBuild from './commands/esbuild.js'
 import Hello from './commands/hello/index.js'
 import HelloWorld from './commands/hello/world.js'
 export {default as INIT_HOOK} from './hooks/init/init.js'
 
-export const ESM1_INIT_HOOK = PluginTestEsm1.hooks.init
-export const UPDATE_HOOK = PluginPlugins.hooks.update
-
 export const COMMANDS: Record<string, Command.Class> = {
-  ...PluginTestEsm1.commands,
-  ...PluginPlugins.commands,
   esbuild: ESBuild,
   hello: Hello,
   'hello:alias': HelloWorld,
   'hello:world': HelloWorld,
 }
 
-export async function run() {
-  await execute({dir: import.meta.url})
+export async function run(loadOptions?: LoadOptions) {
+  // eslint-disable-next-line unicorn/prefer-module
+  await execute({dir: __dirname, loadOptions})
 }
+
+// eslint-disable-next-line unicorn/prefer-top-level-await
+run({
+  root: __dirname,
+  pjson: {
+    name: 'mytool',
+    version: 'v1.5',
+    oclif: {
+      bin: 'bundle',
+      dirname: 'bundle',
+      commands: {
+        strategy: 'explicit',
+        target: './index.js',
+        identifier: 'COMMANDS',
+      },
+      topicSeparator: ' ',
+      topics: {
+        hello: {
+          description: 'Say hello to the world and others',
+        },
+      },
+      hooks: {
+        init: [
+          {
+            target: './index.js',
+            identifier: 'INIT_HOOK',
+          },
+        ],
+      },
+    },
+  },
+})
