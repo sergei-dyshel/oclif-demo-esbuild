@@ -1,12 +1,22 @@
-const {build} = require('esbuild')
-build({
-  bundle: true,
-  entryPoints: ['./src/index.ts'],
-  // format: 'esm',
-  // inject: ['./bin/cjs-shims.js'],
-  outdir: './dist',
-  external: ['oclif', '@oclif/core'],
-  sourcemap: 'inline',
-  platform: 'node',
-  plugins: [],
-})
+const {build, analyzeMetafile} = require('esbuild')
+
+// eslint-disable-next-line unicorn/prefer-top-level-await
+;(async () => {
+  const result = await build({
+    bundle: true,
+    entryPoints: ['./src/index.ts'],
+    outdir: './dist',
+    external: ['typescript'],
+    sourcemap: 'inline',
+    platform: 'node',
+    plugins: [],
+    metafile: true,
+  })
+
+  const analysis = await analyzeMetafile(result.metafile, {
+    verbose: true,
+  })
+
+  // console.log(analysis)
+  analysis
+})()
