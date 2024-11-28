@@ -72,6 +72,5 @@
     "prepare": "yarn build",
     "test": "mocha --forbid-only \"test/**/*.test.ts\"",
     "version": "oclif readme && git add README.md"
-  },
-  "type": "module"
+  }
 }
