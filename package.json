@@ -10,7 +10,8 @@
     "bundle": "./bin/run.js"
   },
   "dependencies": {
-    "@oclif/core": "^4"
+    "@oclif/core": "^4",
+    "@sergei-dyshel/oclif-plugin-autocomplete-cjs": "^3.2.11"
   },
   "devDependencies": {
     "@oclif/prettier-config": "^0.2.1",
@@ -24,6 +25,7 @@
     "eslint-config-oclif": "^5",
     "eslint-config-oclif-typescript": "^3",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-only-warn": "^1.1.0",
     "mocha": "^10",
     "oclif": "^4.15.28",
     "ts-node": "^10.9.2",

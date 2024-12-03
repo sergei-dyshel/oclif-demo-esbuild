@@ -1,5 +1,6 @@
 {
   "extends": ["oclif", "oclif-typescript", "prettier"],
+  "plugins": ["only-warn"],
   "rules": {
     "perfectionist/sort-objects": "off",
     "unicorn/prefer-module": "off"

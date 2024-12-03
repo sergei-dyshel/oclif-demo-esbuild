@@ -1,6 +1,8 @@
-import {Args, Command, Flags} from '@oclif/core'
+import {Args, Flags} from '@oclif/core'
 
-export default class Hello extends Command {
+import {BaseCommandWithVerbosity} from '../base'
+
+export default class Hello extends BaseCommandWithVerbosity<typeof Hello> {
   static args = {
     person: Args.string({description: 'Person to say hello to', required: true}),
   }
@@ -14,12 +16,10 @@ hello friend from oclif! (./src/commands/hello/index.ts)
   ]
 
   static flags = {
-    from: Flags.string({char: 'f', description: 'Who is saying hello', required: true}),
+    from: Flags.string({char: 'f', description: 'Who is saying hello', default: 'me'}),
   }
 
   async run(): Promise<void> {
-    const {args, flags} = await this.parse(Hello)
-
-    this.log(`hello ${args.person} from ${flags.from}! (./src/commands/hello/index.ts)`)
+    this.log(`hello ${this.args.person} from ${this.flags.from}! (./src/commands/hello/index.ts)`)
   }
 }
